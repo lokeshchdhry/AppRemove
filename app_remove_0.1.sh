@@ -3,9 +3,9 @@
 bold=$(tput bold)
 normal=$(tput sgr0)
 
-for i in 1 2 3 4     #Currently max 4 connected devices are supported
+for i in 1 2 3 4      #Currently max 5 connected devices are supported
 do
-	a=$(adb devices|awk -F 'device' '{print $1}'|tr -d "List of"|tr -d '\n'|tr '[[:blank:]]/' ','|awk -v b="$i" -F ',' '{print $b}')
+	a=$(adb devices|awk -F 'device' '{print $1}'|sed '1d'|tr -d '\n'|tr '[[:blank:]]/' ','|awk -v b="$i" -F ',' '{print $b}')
 	if [ ! -z "$a" ]; then
 		echo
 		model=$(adb -s $a shell  getprop ro.product.model)
